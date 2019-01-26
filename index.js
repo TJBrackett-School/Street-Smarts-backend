@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = mongoose.model('Users', UserSchema);
+
 var UserSchema = new Schema ({
 	accountName: String,
 	firstName: String,
