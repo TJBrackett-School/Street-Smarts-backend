@@ -2,11 +2,36 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const User = mongoose.model('Users', UserSchema);
+var UserSchema = new Schema ({
+	accountName: String,
+	firstName: String,
+	lastName: String,
+	address: String,
+	library: {
+		book: {
+			title: String,
+			author: String,
+			genre: String,
+			timesCheckedOut: Number
+		},	
+	},
+	checkedOut: {
+		bookTitle: String,
+		bookOwner: String,
+		returnDate: Date
+	}
+});
 
 var corsOptions = {
 	origin: 'http://localhost:4200',
 	optionsSuccessStatus: 200
 };
+
+mongoose.connect('mongodb://localhost:9521/test', {userNewUrlParser: true});
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
@@ -36,3 +61,4 @@ app.route('/api/books/:title').put((req, res) => {
 app.route('/api/books/:title').delete((req, res) => {
 	res.sendStatus(204);
 });
+
