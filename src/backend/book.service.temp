@@ -25,7 +25,7 @@ export interface Cat{
 	updateBook(book: Book): Observable<void> {
 		return this.http.put<void>('http://localhost:4200/api/books/' + book.title, book);
 	}
-	
+
 	deleteBook(title: string) {
 		return this.http.delete('http://localhost:4200/api/books/' + title);
 	}
