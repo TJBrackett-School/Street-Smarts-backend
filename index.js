@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 var corsOptions = {
-	origin: 'http://www.example.com',
+	origin: 'http://localhost:4200',
 	optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
