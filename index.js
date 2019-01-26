@@ -3,14 +3,14 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-var corOptions = {
+var corsOptions = {
 	origin: 'http://www.example.com',
-	optionsSuccessStatus: 200;
+	optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.listen(8000m (*) => {
+app.listen(4200, () => {
 	console.log('Server started.');
 });
 
