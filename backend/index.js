@@ -5,11 +5,11 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const sqlite3 = require('sqlite3').verbose();
 
-let db = new sqlite3.Database(':memory:', (err) => {
+let db = new sqlite3.Database('./db/FinalProj.db', (err) => {
 	if (err) {
 		return console.error(err.message);
 	}
-	console.log("Connected to SQLite DB.")
+	console.log("Connected to DB.")
 });
 const app = express();
 
@@ -28,14 +28,28 @@ app.listen(9521, () => {
 });
 
 
-//Display login/sign up page.
+//Display login up page.
 app.get('/', (req, res) => {
 	res.send('<h1>Welcome!</h1>');
 });
-//Login/signup page post
-app.post('/', (res, req, next) => {
+//Login page post
+app.post('/', (req, res, next) => {
 	res.send('<p>HTML paragraph.</p>');
 	next();
+});
+//Signup page
+app.get('/signup', (req, res) => {
+	res.send('Signup page.');
+});
+//Signup post
+app.post('/signup', (req, res) => {
+	db.run('insert into User(AccountName) values(?)', (err) => {
+		if (err) {
+			return console.log(err.message);
+		}
+		console.log("RowID ${this.lastID} added.");
+	});
+	db.close();
 });
 //Display home page
 app.get('/home', (req, res) => {
