@@ -1,62 +1,58 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-/*
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const mongoURL = 'mongodb://localhost:8888/Users';
-const mongoDB = mongoose.connect(mongoURL).connection;
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-mongoDB.on('error', function(err) {console.log(err.message); });
-mongoDB.once('open', function() {
-	console.log("mongodb connection open");
-});
-
-var UserSchema = new Schema ({
-	accountName: String,
-	firstName: String,
-	lastName: String,
-	address: String,
-	library: {
-		book: {
-			title: String,
-			author: String,
-			genre: String,
-			timesCheckedOut: Number
-		},	
-	},
-	checkedOut: {
-		bookTitle: String,
-		bookOwner: String,
-		returnDate: Date
-	}
-});
-const User = mongoose.model('Users', UserSchema);
-*/
+const app = express();
 
 var corsOptions = {
 	origin: 'http://www.example.com',
 	optionsSuccessStatus: 200
 };
 
-
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({secret: "Super secret."}));
 
 app.listen(9521, () => {
 	console.log('Server started.');
 });
 
+
+//Display login/sign up page.
+app.get('/', (req, res) => {
+	res.send('<h1>Welcome!</h1>');
+});
+//Login/signup page post
+app.post('/', (res, req, next) => {
+	res.send('<p>HTML paragraph.</p>');
+	next();
+});
+//Display home page
+app.get('/home', (req, res) => {
+	res.send("Main page get.");
+});
+//Post search from home page
+app.post('/home', (req, res, next) => {
+	res.send("Main page post.");
+	next();
+});
+//Display account page
+app.get('/account', (req, res) => {
+	res.send("Account page get.");
+});
+//Update account/library info
+app.post('/account', (req, res, next) => {
+	res.send("Account page post.")
+	next();
+});
+/*
 app.route('/api/books').get((req, res) => {
 	res.send({
 		books: [{title: '1984'}, {title: 'Game of Thrones'}]
 	});
-});
-//Route test
-app.get('/', function(req, res) {
-	res.send('Works!');
 });
 
 app.route('/api/books/:title').get((req, res) => {
@@ -76,4 +72,4 @@ app.route('/api/books/:title').put((req, res) => {
 app.route('/api/books/:title').delete((req, res) => {
 	res.sendStatus(204);
 });
-
+*/
