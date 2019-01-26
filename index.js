@@ -2,9 +2,16 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const User = mongoose.model('Users', UserSchema);
+
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var mongoURL = 'mongodb://localhost:8888/Users';
+var mongoDB = mongoose.connect(mongoURL).connection;
+
+mongoDB.on('error', function(err) {console.log(err.message); });
+mongoDB.once('open', function() {
+	console.log("mongodb connection open");
+});
 
 var UserSchema = new Schema ({
 	accountName: String,
@@ -25,18 +32,19 @@ var UserSchema = new Schema ({
 		returnDate: Date
 	}
 });
+const User = mongoose.model('Users', UserSchema);
 
 var corsOptions = {
-	origin: 'http://localhost:4200',
+	origin: 'http://localhost:8000',
 	optionsSuccessStatus: 200
 };
 
-mongoose.connect('mongodb://localhost:9521/test', {userNewUrlParser: true});
+mongoose.connect('mongodb://localhost:8888/Users');
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.listen(4200, () => {
+app.listen(8888, () => {
 	console.log('Server started.');
 });
 
@@ -49,6 +57,7 @@ app.route('/api/books').get((req, res) => {
 app.route('/api/books/:title').get((req, res) => {
 	const requestedTitle = req.params['title'];
 	res.send({title:requestedTitle});
+	console.log("Get works.")
 });
 
 app.route('/api/books').post((req, res) => {
