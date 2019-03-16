@@ -43,7 +43,7 @@ router.get('/account', (req, res) => {
 router.get('/register', (req, res) => {
     res.sendFile(viewsPath + 'register.html');
 });
-router.post('/register/:user', (req, res) => {
+router.post('/register/', (req, res) => {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     var email = req.body.email;
