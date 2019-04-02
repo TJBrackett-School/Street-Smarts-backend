@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `books`
+--
+
+DROP TABLE IF EXISTS `books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `books` (
+  `title` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `genre` varchar(255) DEFAULT NULL,
+  `isbn` varchar(255) DEFAULT NULL,
+  `bookID` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`bookID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `books`
+--
+
+LOCK TABLES `books` WRITE;
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -43,6 +69,32 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (1,'Brackett','TJ','here','tjb@stuff.com','1234','tjb9521');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user_books`
+--
+
+DROP TABLE IF EXISTS `user_books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_books` (
+  `userID` int(11) NOT NULL,
+  `bookID` int(11) NOT NULL,
+  KEY `userID` (`userID`),
+  KEY `bookID` (`bookID`),
+  CONSTRAINT `user_books_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `user_books_ibfk_2` FOREIGN KEY (`bookID`) REFERENCES `books` (`bookID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_books`
+--
+
+LOCK TABLES `user_books` WRITE;
+/*!40000 ALTER TABLE `user_books` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_books` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-28 21:54:13
+-- Dump completed on 2019-03-29 19:02:52
