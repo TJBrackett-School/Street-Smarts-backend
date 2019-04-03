@@ -35,6 +35,17 @@ router.post('/register/', (req, res) => {
         username = req.body.username,
         password = bcrypt.hashSync(req.body.password);
 
+    var tokenVerify = {
+        issuer: "290 Final Team 2",
+        subject: username,
+        audience: "StreetSmarts",
+        expiresIn: "12h",
+        algorithm: "HS256"
+    };
+/*
+    var legitToken = jwt.verify(token, secretKey, tokenVerify);
+    console.log(legitToken);
+*/
     //Make sure the user input something in every field
     if (email && password && firstName && lastName && address && username) {
         try {
